@@ -1,0 +1,26 @@
+{
+  "name": "imperial-bot",
+  "version": "1.0.0",
+  "description": "A hastebin alternative but with user experience in mind with much more features, as a Discord bot!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imperialbin/IMPERIAL-bot.git"
+  },
+  "keywords": [
+    "devlooskie",
+    "imperial",
+    "imperialbin",
+    "imperialb.in",
+    "imperialbin.com"
+  ],
+  "author": "DEVLOOSKIE",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/imperialbin/IMPERIAL-bot/issues"
+  },
+  "homepage": "https://github.com/imperialbin/IMPERIAL-bot#readme"
+}
