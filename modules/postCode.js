@@ -1,6 +1,9 @@
 const Users = require('../models/User');
 const Imperial = require('imperial-node').Imperial;
 
+// Utilities
+const throwError = require('../utils/throwError');
+
 module.exports = msg => {
   Users.findOne({ userId: msg.author.id }, (err, user) => {
     if (user) {
@@ -13,14 +16,13 @@ module.exports = msg => {
           const api = new Imperial(user.apiToken)
           api.postCode(authorsMessage.first().content).then(paste => msg.reply(paste.formattedLink));
         } else {
-          msg.reply('You didn\'t respond in 30 seconds! The operation has been cancelled');
+          throwError(msg, 'You didn\'t respond in 30 seconds! The operation has been cancelled')
         }
       }).catch(err => {
-        console.log(err);
-        msg.channel.send('Sorry, but an internal server error occured!');
+        throwError(msg, 'An internal server error occured!')
       })
     } else {
-      msg.channel.send('Please hook up your IMPERIAL account by doing `!imp api` before trying to post code!')
+      throwError(msg, 'Please hook up your IMPERIAL account by doing `!imp api` before trying to post code!')
     }
   })
 }
