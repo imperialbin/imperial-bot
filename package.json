@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/imperialbin/IMPERIAL-bot/issues"
   },
-  "homepage": "https://github.com/imperialbin/IMPERIAL-bot#readme"
+  "homepage": "https://github.com/imperialbin/IMPERIAL-bot#readme",
+  "dependencies": {
+    "discord.js": "^12.5.1"
+  }
 }
