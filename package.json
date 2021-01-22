@@ -4,6 +4,8 @@
   "description": "A hastebin alternative but with user experience in mind with much more features, as a Discord bot!",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
+    "devStart": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -24,6 +26,12 @@
   },
   "homepage": "https://github.com/imperialbin/IMPERIAL-bot#readme",
   "dependencies": {
-    "discord.js": "^12.5.1"
+    "discord.js": "^12.5.1",
+    "dotenv": "^8.2.0",
+    "imperial-node": "^1.1.5",
+    "mongodb": "^3.6.3",
+    "mongoose": "^5.11.13",
+    "node-fetch": "^2.6.1",
+    "nodemon": "^2.0.7"
   }
 }
