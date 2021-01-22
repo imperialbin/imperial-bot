@@ -9,6 +9,10 @@ const postCode = require('./modules/postCode');
 const getCode = require('./modules/getCode');
 const setApiToken = require('./modules/setApiToken');
 const help = require('./modules/help');
+
+// Utilities
+const throwError = require('./utils/throwError');
+
 client.on('ready', () => {
   client.user.setActivity('!imp help | https://imperialb.in/', { type: 'PLAYING' });
   console.log('READY');
@@ -42,7 +46,7 @@ client.on('message', async msg => {
       setApiToken(msg, client);
       break;
     default:
-      msg.channel.send('Unknown command!')
+      throwError(msg, 'Unknown command!')
       break;
   }
 })
