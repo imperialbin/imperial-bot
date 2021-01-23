@@ -42,7 +42,7 @@ client.on('message', async msg => {
     case (command === 'getcode' || command === 'get' || command === 'code'):
       getCode(msg);
       break;
-    case (command === 'setapi' || command === 'setapitoken' || command === 'api'):
+    case (command === 'setapi' || command === 'setapitoken' || command === 'api' || command === 'setup'):
       setApiToken(msg, client);
       break;
     default:
