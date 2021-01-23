@@ -14,7 +14,9 @@ module.exports = msg => {
       }).then(authorsMessage => {
         if (authorsMessage.first()) {
           const api = new Imperial(user.apiToken)
-          api.postCode(authorsMessage.first().content).then(paste => msg.reply(paste.formattedLink)).then(msg.delete());
+          api.postCode(authorsMessage.first().content)
+            .then(paste => msg.reply(paste.formattedLink))
+            .then(msg.delete());
         } else {
           throwError(msg, 'You didn\'t respond in 30 seconds! The operation has been cancelled')
         }
