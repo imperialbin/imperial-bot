@@ -14,7 +14,7 @@ module.exports = msg => {
         if (paste.success) {
           msg.channel
             .send(`\`\`\` \n ${paste.document} \`\`\``)
-            .catch(err => throwError(msg, `Code is too long! Here is a URL, https://imperialb.in/p/${documentId}`));
+            .catch(() => throwError(msg, `Code is too long! Here is a URL, https://imperialb.in/p/${documentId}`));
         } else {
           throwError(msg, 'Sorry, but we couldn\'t find the paste you were looking for!')
         }
