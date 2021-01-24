@@ -52,7 +52,9 @@ module.exports = async (msg, client) => {
       throwError(msg, 'Please insert a valid API token!')
     }
   } else {
-    msg.reply('I\'ve sent you a DM, make sure your DMs are open in order to receive it!');
-    client.users.cache.get(msg.author.id).send('Please reply to this DM with a valid API token! \n\n Ex: `IMPERIAL-xxxx-xxx-xxxx`');
+    client.users.cache.get(msg.author.id)
+      .send('Please reply to this DM with a valid API token! \n\n Ex: `IMPERIAL-xxxx-xxx-xxxx`')
+      .then(msg.reply('I\'ve attempted to send you a DM!'))
+      .catch(throwError(msg, 'An error occured whilst trying to DM you! Perhaps you have DMs turned off?'))
   }
 }
