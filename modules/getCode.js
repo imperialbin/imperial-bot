@@ -9,7 +9,7 @@ const api = new Imperial()
 module.exports = msg => {
   Users.findOne({ userId: msg.author.id }, (err, user) => {
     if (user) {
-      var documentId = msg.content.substr(msg.content.indexOf(' ', msg.content.indexOf(' ') + 1)).replace(/\s/g, '');
+      const documentId = msg.content.substr(msg.content.indexOf(' ', msg.content.indexOf(' ') + 1)).replace(/\s/g, '');
       api
         .getCode(documentId)
         .then(paste => {
