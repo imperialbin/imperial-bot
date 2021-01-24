@@ -8,6 +8,7 @@ const api = new Imperial()
 
 module.exports = msg => {
   Users.findOne({ userId: msg.author.id }, (err, user) => {
+    if (err) return throwError(msg, 'An internal server error occured! Please contact an admin!');
     if (user) {
       const documentId = msg.content.substr(msg.content.indexOf(' ', msg.content.indexOf(' ') + 1)).replace(/\s/g, '');
       api
