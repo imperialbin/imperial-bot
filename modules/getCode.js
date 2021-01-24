@@ -10,8 +10,7 @@ module.exports = msg => {
     if (err) return throwError(msg, 'An internal server error occured! Please contact an admin!');
     if (user) {
       const documentId = msg.content.substr(msg.content.indexOf(' ', msg.content.indexOf(' ') + 1)).replace(/\s/g, '');
-      api
-        .getCode(documentId)
+      api.getCode(documentId)
         .then(paste => {
           if (paste.success) {
             msg.channel
