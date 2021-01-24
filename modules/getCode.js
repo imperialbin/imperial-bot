@@ -3,12 +3,12 @@ const Imperial = require('imperial-node').Imperial;
 
 // Utilities
 const throwError = require('../utils/throwError');
-const api = new Imperial()
 
 module.exports = msg => {
   Users.findOne({ userId: msg.author.id }, (err, user) => {
     if (err) return throwError(msg, 'An internal server error occured! Please contact an admin!');
     if (user) {
+      const api = new Imperial(user.apiToken);
       const documentId = msg.content.substr(msg.content.indexOf(' ', msg.content.indexOf(' ') + 1)).replace(/\s/g, '');
       api.getCode(documentId)
         .then(paste => {
