@@ -3,7 +3,6 @@ const Imperial = require('imperial-node').Imperial;
 
 // Utilities
 const throwError = require('../utils/throwError');
-
 const api = new Imperial()
 
 module.exports = msg => {
