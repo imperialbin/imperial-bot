@@ -22,7 +22,7 @@ module.exports = msg => {
                 .then(paste => msg.reply(paste.formattedLink))
                 .then(msg.delete());
             } else {
-              throwError(msg, "The operation has been cancelled")
+              throwError(msg, 'The operation has been cancelled')
             }
           } else {
             throwError(msg, 'You didn\'t respond in 30 seconds! The operation has been cancelled')
