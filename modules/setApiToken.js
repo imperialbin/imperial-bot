@@ -18,7 +18,7 @@ module.exports = async (msg, client) => {
               return throwError(msg, 'A server error occured whilst trying to change your API key!')
             }
             if (user) {
-              return throwSuccess(msg, 'Successfully set your API token to your Discord account!');
+              return throwSuccess(msg, 'Successfully linked your API token to your Discord account!');
             } else {
               return throwError(msg, 'You have not linked you\'re account yet! Please just pass your API key!')
             }
@@ -42,7 +42,7 @@ module.exports = async (msg, client) => {
               apiToken: msg.content
             })
             newUser.save()
-              .then(() => throwSuccess(msg, 'Successfully set your API token to your Discord account!'))
+              .then(() => throwSuccess(msg, 'Successfully linked your API token to your Discord account!'))
           } else {
             throwError(msg, 'That API token isn\'t valid!')
           }
