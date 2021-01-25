@@ -52,7 +52,7 @@ module.exports = async (msg, client) => {
       throwError(msg, 'Please insert a valid API token!')
     }
   } else {
-    client.users.cache.get(msg.author.id)
+    msg.author
       .send('Please reply to this DM with a valid API token! \n\n Ex: `IMPERIAL-xxxx-xxx-xxxx`')
       .then(msg.reply('I\'ve attempted to send you a DM!'))
   }
