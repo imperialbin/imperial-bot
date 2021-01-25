@@ -55,6 +55,5 @@ module.exports = async (msg, client) => {
     client.users.cache.get(msg.author.id)
       .send('Please reply to this DM with a valid API token! \n\n Ex: `IMPERIAL-xxxx-xxx-xxxx`')
       .then(msg.reply('I\'ve attempted to send you a DM!'))
-      .catch(throwError(msg, 'An error occured whilst trying to DM you! Perhaps you have DMs turned off?'))
   }
 }
