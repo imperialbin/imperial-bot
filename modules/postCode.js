@@ -14,19 +14,22 @@ module.exports = msg => {
       msg.channel.send('Go ahead and paste what you want to save in the chat, or type \'CANCEL\' in all caps to cancel!')
       msg.channel.awaitMessages(awaitingMessage => awaitingMessage.author.id == msg.author.id, options)
         .then(authorsMessage => {
-          if (authorsMessage.first()) {
-            const api = new Imperial(user.apiToken)
-            api.postCode(authorsMessage.first().content)
-              .then(paste => msg.reply(paste.formattedLink))
-              .then(msg.delete());
+          const code = authorsMessage.first()
+          if (code) {
+            if (code.content !== 'CANCEL') {
+              const api = new Imperial(user.apiToken)
+              api.postCode(code.content)
+                .then(paste => msg.reply(paste.formattedLink))
+                .then(msg.delete());
+            } else {
+              throwError(msg, 'The operation has been cancelled')
+            }
           } else {
             throwError(msg, 'You didn\'t respond in 30 seconds! The operation has been cancelled')
           }
-        }).catch(() => {
-          throwError(msg, 'An internal server error occured!')
-        })
+        }).catch(() => throwError(msg, 'An internal server error occured!'))
     } else {
-      throwError(msg, 'Please hook up your IMPERIAL account by doing `!imp api` before trying to post code!')
+      throwError(msg, 'Please link your IMPERIAL account by doing `!imp api` before trying to post code!')
     }
   })
 }

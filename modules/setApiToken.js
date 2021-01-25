@@ -5,7 +5,7 @@ const fetch = require('node-fetch')
 const throwError = require('../utils/throwError');
 const throwSuccess = require('../utils/throwSuccess');
 
-module.exports = async (msg, client) => {
+module.exports = async msg => {
   if (msg.channel.type == 'dm') {
     if (msg.content.includes('change')) {
       if (msg.content.split(' ').length == 2) {
@@ -13,12 +13,9 @@ module.exports = async (msg, client) => {
         const verifyToken = await req.json();
         if (verifyToken.success) {
           Users.findOneAndUpdate({ userId: msg.author.id }, { $set: { apiToken: msg.content.split(' ')[1] } }, (err, user) => {
-            if (err) {
-              console.log(err);
-              return throwError(msg, 'A server error occured whilst trying to change your API key!')
-            }
+            if (err) return throwError(msg, 'A server error occured whilst trying to change your API key!')
             if (user) {
-              return throwSuccess(msg, 'Successfully set your API token to your Discord account!');
+              return throwSuccess(msg, 'Successfully linked your API token to your Discord account!');
             } else {
               return throwError(msg, 'You have not linked you\'re account yet! Please just pass your API key!')
             }
@@ -42,7 +39,7 @@ module.exports = async (msg, client) => {
               apiToken: msg.content
             })
             newUser.save()
-              .then(() => throwSuccess(msg, 'Successfully set your API token to your Discord account!'))
+              .then(() => throwSuccess(msg, 'Successfully linked your API token to your Discord account!'))
           } else {
             throwError(msg, 'That API token isn\'t valid!')
           }
@@ -52,7 +49,7 @@ module.exports = async (msg, client) => {
       throwError(msg, 'Please insert a valid API token!')
     }
   } else {
-    client.users.cache.get(msg.author.id)
+    msg.author
       .send('Please reply to this DM with a valid API token! \n\n Ex: `IMPERIAL-xxxx-xxx-xxxx`')
       .then(msg.reply('I\'ve attempted to send you a DM!'))
   }

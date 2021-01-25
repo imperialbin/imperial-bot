@@ -43,7 +43,7 @@ client.on('message', async msg => {
       getCode(msg);
       break;
     case (command === 'setapi' || command === 'setapitoken' || command === 'api' || command === 'setup'):
-      setApiToken(msg, client);
+      setApiToken(msg);
       break;
     default:
       throwError(msg, 'Unknown command!')

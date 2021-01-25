@@ -9,7 +9,7 @@ module.exports = msg => {
     if (err) return throwError(msg, 'An internal server error occured! Please contact an admin!');
     if (user) {
       const api = new Imperial(user.apiToken);
-      const documentId = msg.content.substr(msg.content.indexOf(' ', msg.content.indexOf(' ') + 1)).replace(/\s/g, '');
+      const documentId = msg.content.split(' ')[2]
       api.getCode(documentId)
         .then(paste => {
           if (paste.success) {
