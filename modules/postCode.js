@@ -29,7 +29,7 @@ module.exports = msg => {
           }
         }).catch(() => throwError(msg, 'An internal server error occured!'))
     } else {
-      throwError(msg, 'Please hook up your IMPERIAL account by doing `!imp api` before trying to post code!')
+      throwError(msg, 'Please link your IMPERIAL account by doing `!imp api` before trying to post code!')
     }
   })
 }
