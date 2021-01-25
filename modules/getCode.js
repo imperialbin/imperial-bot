@@ -19,7 +19,7 @@ module.exports = msg => {
           } else {
             throwError(msg, 'Sorry, but we couldn\'t find the paste you were looking for!')
           }
-        })
+        }).catch(err => throwError(msg, 'There was an error getting your paste!'))
     } else {
       throwError(msg, 'Please hook up your IMPERIAL account by doing `!imp api` before trying to get code!')
     }
