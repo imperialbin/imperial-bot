@@ -5,7 +5,7 @@ const fetch = require('node-fetch')
 const throwError = require('../utils/throwError');
 const throwSuccess = require('../utils/throwSuccess');
 
-module.exports = async (msg, client) => {
+module.exports = async msg => {
   if (msg.channel.type == 'dm') {
     if (msg.content.includes('change')) {
       if (msg.content.split(' ').length == 2) {
@@ -13,10 +13,7 @@ module.exports = async (msg, client) => {
         const verifyToken = await req.json();
         if (verifyToken.success) {
           Users.findOneAndUpdate({ userId: msg.author.id }, { $set: { apiToken: msg.content.split(' ')[1] } }, (err, user) => {
-            if (err) {
-              console.log(err);
-              return throwError(msg, 'A server error occured whilst trying to change your API key!')
-            }
+            if (err) return throwError(msg, 'A server error occured whilst trying to change your API key!')
             if (user) {
               return throwSuccess(msg, 'Successfully linked your API token to your Discord account!');
             } else {
