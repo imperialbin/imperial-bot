@@ -27,7 +27,7 @@ module.exports = msg => {
             api.postCode(totalMsgArray.toString().replace(/,/g, ""))
               .then(paste => msg.reply(paste.formattedLink))
               .then(msg.delete())
-              .catch(() => throwError(msg, 'An error occured whilst posting the messages! Please contact an admin!'));
+              .catch(() => throwError(msg, 'An error occurred whilst posting the messages! Please contact an admin!'));
           }).catch(() => throwError(msg, 'An error occurred whilst fetching the messages! Make sure you aren\'t trying to get more than 100 messages!'))
       } else {
         throwError(msg, 'You need to set an amount of messages you want to save!');
