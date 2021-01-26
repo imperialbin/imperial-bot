@@ -6,6 +6,7 @@ require('dotenv').config();
 
 // Modules
 const postCode = require('./modules/postCode');
+const saveMessages = require('./modules/saveMessages');
 const getCode = require('./modules/getCode');
 const setApiToken = require('./modules/setApiToken');
 const help = require('./modules/help');
@@ -38,6 +39,9 @@ client.on('message', async msg => {
       break;
     case (command === 'paste' || command === 'postcode' || command === 'post'):
       postCode(msg);
+      break;
+    case (command === 'save'):
+      saveMessages(msg);
       break;
     case (command === 'getcode' || command === 'get' || command === 'code'):
       getCode(msg);
