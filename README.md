@@ -12,5 +12,6 @@ Bot Prefix is `!imp`
 
 * `!imp api`: Allows you to setup API key in DMs with bot.
 * `!imp paste`: Creates an [ImperialBin](https://Imperialb.in) paste with the content following the prefix.
-* `!imp getcode`: Retrieves code content from an ImperialBin Document ID.
+* `!imp save {amount of messages to save}`: Pastes the amount of messages you've set in a paste
+* `!imp get {documentId}`: Retrieves code content from an ImperialBin Document ID.
 * `!imp help`: Shows commands here, but in discord embed form.
