@@ -17,7 +17,7 @@ module.exports = msg => {
           for (let i = 0; i < msgArray.length; i++) {
             const message = msgArray[i].content;
             const date = new Date(msgArray[i].createdTimestamp);
-            const time = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+            const time = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.toTimeString().slice(9)}`;
             const user = `${msgArray[i].author.username}#${msgArray[i].author.discriminator}`;
             totalMsgArray.push(`${user} (${time})\n${message}\n`);
           }
