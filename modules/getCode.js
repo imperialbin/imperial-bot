@@ -21,7 +21,7 @@ module.exports = msg => {
           }
         }).catch(() => throwError(msg, 'There was an error getting your paste!'))
     } else {
-      throwError(msg, 'Please hook up your IMPERIAL account by doing `!imp api` before trying to get code!')
+      throwError(msg, 'Please link your IMPERIAL account by doing `!imp api` before trying to get code!')
     }
   })
 }
