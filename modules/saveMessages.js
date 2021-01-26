@@ -6,7 +6,7 @@ const throwError = require("../utils/throwError");
 
 module.exports = msg => {
   Users.findOne({ userId: msg.author.id }, (err, user) => {
-    if (err) return throwError(msg, 'An internal server error occured! Please contact an admin!');
+    if (err) return throwError(msg, 'An internal server error occurred! Please contact an admin!');
     if (user) {
       const limit = msg.content.split(' ')[2];
       if (limit) {
