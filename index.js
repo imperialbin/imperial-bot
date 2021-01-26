@@ -37,7 +37,7 @@ client.on('message', async msg => {
     case (command === 'help' || command === 'h'):
       help(msg);
       break;
-    case (command === 'paste' || command === 'postcode' || command === 'post'):
+    case (command === 'paste' || command === 'postcode' || command === 'post' || command === 'p'):
       postCode(msg);
       break;
     case (command === 'save' || command === 'savemessages' || command === 'savemessages'):
