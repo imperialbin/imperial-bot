@@ -33,7 +33,7 @@ module.exports = msg => {
         throwError(msg, 'You need to set an amount of messages you want to save!');
       }
     } else {
-      throwError(msg, 'Please hook up your IMPERIAL account by doing `!imp api` before trying to save messages!')
+      throwError(msg, 'Please link your IMPERIAL account by doing `!imp api` before trying to save messages!')
     }
   })
 }
