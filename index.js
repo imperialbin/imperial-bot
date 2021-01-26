@@ -40,7 +40,7 @@ client.on('message', async msg => {
     case (command === 'paste' || command === 'postcode' || command === 'post'):
       postCode(msg);
       break;
-    case (command === 'save'):
+    case (command === 'save' || command === 'savemessages' || command === 'savemessages'):
       saveMessages(msg);
       break;
     case (command === 'getcode' || command === 'get' || command === 'code'):
