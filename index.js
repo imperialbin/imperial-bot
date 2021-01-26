@@ -51,4 +51,11 @@ client.on('message', async msg => {
   }
 })
 
-client.login(process.env.BOT_TOKEN)
+
+if (process.env.ENVIRONMENT === 'DEVELOPMENT') {
+  client.login(process.env.BOT_TOKEN_DEV)
+  console.log('DEV TOKEN BEING USED!')
+} else {
+  client.login(process.env.BOT_TOKEN)
+  console.log('PROD TOKEN BEING USED!')
+}
