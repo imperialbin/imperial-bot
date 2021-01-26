@@ -13,7 +13,7 @@ module.exports = async msg => {
         const verifyToken = await req.json();
         if (verifyToken.success) {
           Users.findOneAndUpdate({ userId: msg.author.id }, { $set: { apiToken: msg.content.split(' ')[1] } }, (err, user) => {
-            if (err) return throwError(msg, 'A server error occured whilst trying to change your API key!')
+            if (err) return throwError(msg, 'A server error occurred whilst trying to change your API key!')
             if (user) {
               return throwSuccess(msg, 'Successfully linked your API token to your Discord account!');
             } else {
