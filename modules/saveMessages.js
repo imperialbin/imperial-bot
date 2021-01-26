@@ -11,6 +11,7 @@ module.exports = msg => {
       const limit = msg.content.split(' ')[2];
       if (limit) {
         msg.channel.messages.fetch({ limit }).then(messages => {
+          const api = new Imperial(user.apiToken);
           const msgArray = messages.array();
           const totalMsgArray = [];
           for (let i = 0; i < msgArray.length; i++) {
@@ -20,8 +21,9 @@ module.exports = msg => {
             const user = `${msgArray[i].author.username}#${msgArray[i].author.discriminator}`;
             totalMsgArray.push(`${user} (${time})\n${message}\n`);
           }
-          const api = new Imperial(user.apiToken);
-          console.log(totalMsgArray.toString().replace(/,/g, ""));
+          api.postCode(totalMsgArray.toString().replace(/,/g, ""))
+            .then(paste => msg.reply(paste.formattedLink))
+            .then(msg.delete());
         })
       } else {
         throwError(msg, 'You need to set an amount of messages you want to save!');
