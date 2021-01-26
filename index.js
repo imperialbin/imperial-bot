@@ -43,7 +43,7 @@ client.on('message', async msg => {
     case (command === 'save' || command === 'savemessages' || command === 'savemessages'):
       saveMessages(msg);
       break;
-    case (command === 'getcode' || command === 'get' || command === 'code'):
+    case (command === 'getcode' || command === 'get' || command === 'code' || command === 'g'):
       getCode(msg);
       break;
     case (command === 'setapi' || command === 'setapitoken' || command === 'api' || command === 'setup'):
