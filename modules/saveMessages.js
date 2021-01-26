@@ -1,0 +1,33 @@
+const Users = require('../models/User');
+const Imperial = require('imperial-node').Imperial;
+
+// Utilities
+const throwError = require("../utils/throwError");
+
+module.exports = msg => {
+  Users.findOne({ userId: msg.author.id }, (err, user) => {
+    if (err) return throwError(msg, 'An internal server error occured! Please contact an admin!');
+    if (user) {
+      const limit = msg.content.split(' ')[2];
+      if (limit) {
+        msg.channel.messages.fetch({ limit }).then(messages => {
+          const msgArray = messages.array();
+          const totalMsgArray = [];
+          for (let i = 0; i < msgArray.length; i++) {
+            const message = msgArray[i].content;
+            const date = new Date(msgArray[i].createdTimestamp);
+            const time = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+            const user = `${msgArray[i].author.username}#${msgArray[i].author.discriminator}`;
+            totalMsgArray.push(`${user} (${time})\n${message}\n`);
+          }
+          const api = new Imperial(user.apiToken);
+          console.log(totalMsgArray.toString().replace(/,/g, ""));
+        })
+      } else {
+        throwError(msg, 'You need to set an amount of messages you want to save!');
+      }
+    } else {
+      throwError(msg, 'Please hook up your IMPERIAL account by doing `!imp api` before trying to save messages!')
+    }
+  })
+}
