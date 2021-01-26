@@ -29,7 +29,7 @@ module.exports = msg => {
           } else {
             throwError(msg, 'You didn\'t respond in 30 seconds! The operation has been cancelled')
           }
-        }).catch(() => throwError(msg, 'An internal server error occured!'))
+        }).catch(() => throwError(msg, 'An internal server error occurred!'))
     } else {
       throwError(msg, 'Please link your IMPERIAL account by doing `!imp api` before trying to post code!')
     }
