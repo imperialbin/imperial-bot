@@ -19,8 +19,10 @@ module.exports = msg => {
             if (code.content !== 'CANCEL') {
               const api = new Imperial(user.apiToken)
               api.postCode(code.content)
-                .then(paste => msg.reply(paste.formattedLink))
-                .then(msg.delete());
+                .then(paste => {
+                  msg.reply(paste.formattedLink);
+                  code.delete();
+                })
             } else {
               throwError(msg, 'The operation has been cancelled')
             }
