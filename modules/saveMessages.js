@@ -15,11 +15,13 @@ module.exports = msg => {
           const msgArray = messages.array();
           const totalMsgArray = [];
           for (let i = 0; i < msgArray.length; i++) {
-            const message = msgArray[i].content;
-            const date = new Date(msgArray[i].createdTimestamp);
-            const time = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.toTimeString().slice(9)}`;
-            const user = `${msgArray[i].author.username}#${msgArray[i].author.discriminator}`;
-            totalMsgArray.push(`${user} (${time})\n${message}\n`);
+            if (!msgArray[i].author.bot) {
+              const message = msgArray[i].content;
+              const date = new Date(msgArray[i].createdTimestamp);
+              const time = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.toTimeString().slice(9)}`;
+              const user = `${msgArray[i].author.username}#${msgArray[i].author.discriminator}`;
+              totalMsgArray.push(`${user} (${time})\n${message}\n`);
+            }
           }
           api.postCode(totalMsgArray.toString().replace(/,/g, ""))
             .then(paste => msg.reply(paste.formattedLink))
