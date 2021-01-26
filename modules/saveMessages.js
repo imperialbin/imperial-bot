@@ -14,7 +14,7 @@ module.exports = msg => {
           .then(messages => {
             const api = new Imperial(user.apiToken);
             const msgArray = messages.array();
-            const totalMsgArray = [];
+            const totalMsgArray = []; // We have an array here because we're pushing strings to it from the for loop there, probably not practical, but its the solution I came up with as of the moment
             for (let i = 0; i < msgArray.length; i++) {
               if (!msgArray[i].author.bot) {
                 const message = msgArray[i].content;
