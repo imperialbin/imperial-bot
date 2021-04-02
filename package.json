@@ -26,7 +26,7 @@
   },
   "homepage": "https://github.com/imperialbin/IMPERIAL-bot#readme",
   "dependencies": {
-    "discord.js": "^12.5.1",
+    "discord.js": "^12.5.2",
     "dotenv": "^8.2.0",
     "mongoose": "^5.11.18",
     "imperial-node": "^1.3.0",
