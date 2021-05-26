@@ -451,10 +451,10 @@ ignore-by-default@^1.0.1:
   resolved "https://registry.yarnpkg.com/ignore-by-default/-/ignore-by-default-1.0.1.tgz#48ca6d72f6c6a3af00a9ad4ae6876be3889e2b09"
   integrity sha1-SMptcvbGo68Aqa1K5odr44ieKwk=
 
-imperial-node@^1.3.0:
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/imperial-node/-/imperial-node-1.4.2.tgz#0de65c2202a2c3761d2f0d8c2073538e50cdab9b"
-  integrity sha512-gILuVtSaf01miDRJOULV6WWE8KCXskH14eTldph2wCd3vISv+OGf7AVn+KWTe70PmZD/QA+8uGoaISe9rT2EJQ==
+imperial-node@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/imperial-node/-/imperial-node-2.0.1.tgz#73150a05043bf3429cd76682b565e468e448ec80"
+  integrity sha512-PESRcFMZj/Lgq4A9Uw0WBkJqiu2A8EOWgLeISA/yyemTJjgUV33m24P0yQzvMC057pyCO9lhZcW+WwQ39jEdZQ==
 
 import-lazy@^2.1.0:
   version "2.1.0"
