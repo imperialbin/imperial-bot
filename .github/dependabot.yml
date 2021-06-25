@@ -1,0 +1,29 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "10:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: mongoose
+    versions:
+    - 5.11.14
+    - 5.11.15
+    - 5.11.19
+    - 5.12.0
+    - 5.12.1
+    - 5.12.2
+    - 5.12.3
+    - 5.12.5
+  - dependency-name: discord.js
+    versions:
+    - 12.5.2
+  - dependency-name: imperial-node
+    versions:
+    - 1.2.1
+    - 1.2.2
+    - 1.4.0
+    - 1.4.1
+    - 1.4.2
