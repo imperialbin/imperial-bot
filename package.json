@@ -2,7 +2,7 @@
   "main": "src/index.ts",
   "scripts": {
     "build": "tsc",
-    "buildAndStart": "yarn prisma db push && tsc && yarn node dist/index.js",
+    "buildStart": "yarn prisma db push && tsc && yarn node dist/index.js",
     "start": "node dist/index.js",
     "dev": "ts-node-dev --poll --exit-child --transpile-only ./src/index.ts"
   },
