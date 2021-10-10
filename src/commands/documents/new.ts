@@ -1,4 +1,4 @@
-import { Command, CommandOptions } from "@sapphire/framework";
+import { Args, Command, CommandOptions } from "@sapphire/framework";
 import { ApplyOptions } from "@sapphire/decorators";
 import type { Message } from "discord.js";
 import { prisma } from "../../prisma";
@@ -10,11 +10,11 @@ import { codeBlock } from "@sapphire/utilities";
   description: "Create a new document",
 })
 export class NewCommand extends Command {
-  public async run(message: Message) {
+  public async run(message: Message, args: Args) {
     const user = await getUser(message.author.id);
 
     try {
-      await prisma.document.create({
+      const document = await prisma.document.create({
         data: {
           id: generateID(4),
           content: message.content.substring(9),
@@ -25,7 +25,7 @@ export class NewCommand extends Command {
           },
         },
       });
-      message.channel.send("Successfully created document!");
+      message.channel.send(`Successfully created document! https://staging-balls.impb.in/${document?.id}`);
     } catch (e) {
       message.channel.send(`Error occured: ${e}`);
     }

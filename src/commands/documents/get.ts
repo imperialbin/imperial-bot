@@ -2,8 +2,8 @@ import { Command, CommandOptions } from "@sapphire/framework";
 import { ApplyOptions } from "@sapphire/decorators";
 import type { Message } from "discord.js";
 import { prisma } from "../../prisma";
-import { MessageEmbed } from "discord.js";
-import { codeBlock } from '@sapphire/utilities';
+import { codeBlock } from "@sapphire/utilities";
+import { sendEmbed } from "../../utils/sendEmbed";
 
 @ApplyOptions<CommandOptions>({
   description: "Recieve a document's content",
@@ -16,14 +16,23 @@ export class GetCommand extends Command {
       },
     });
 
-    const documentSettings = await prisma.documentSettings.findUnique({
+    if (document) {
+      const documentSettings = await prisma.documentSettings.findUnique({
         where: {
-            id: document?.documentSettingsId
-        }
-    })
+          id: document?.documentSettingsId,
+        },
+      });
 
-    console.log(documentSettings?.language)
-
-    message.channel.send(codeBlock(String(documentSettings?.language), document?.content))
+      message.channel.send(
+        codeBlock(String(documentSettings?.language), document?.content)
+      );
+    } else {
+      const embed = sendEmbed(
+        "Invalid ID",
+        "Could not find document with that ID!",
+        true,
+      );
+      return message.channel.send({ embeds: [embed] });
+    }
   }
 }

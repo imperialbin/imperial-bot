@@ -22,7 +22,8 @@ export class UnlinkCommand extends Command {
     if (!user) {
       const embed = sendEmbed(
         "You haven't connected yet!",
-        "To connect your Imperial account with your Discord, follow the link below: https://staging-balls-api.impb.in/v1/oauth/discord"
+        "To connect your Imperial account with your Discord, follow the link below: https://staging-balls-api.impb.in/v1/oauth/discord",
+        false
       );
 
       return message.channel.send({ embeds: [embed] });
@@ -40,7 +41,8 @@ export class UnlinkCommand extends Command {
 
       const embed = sendEmbed(
         `Unlinked ${message.author.tag}`,
-        "Your discord account has been unlinked with your Imperial account"
+        "Your discord account has been unlinked with your Imperial account",
+        false
       );
 
       return message.channel.send({ embeds: [embed] });

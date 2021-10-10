@@ -3,16 +3,26 @@ import { MessageEmbed, EmbedFieldData } from "discord.js";
 export const sendEmbed = (
   title: string,
   description: string,
+  error: boolean,
   fields?: EmbedFieldData[]
 ) => {
-  let embed = new MessageEmbed().setTitle(title).setDescription(description);
-
   if (fields) {
-    embed = new MessageEmbed()
+    return new MessageEmbed()
       .setTitle(title)
       .setDescription(description)
-      .addFields(fields);
+      .addFields(fields)
+      .setColor("#24292e");
   }
 
-  return embed;
+  if (error) {
+    return new MessageEmbed()
+      .setTitle(title)
+      .setDescription(description)
+      .setColor("#ff4f4f");
+  } else {
+    return new MessageEmbed()
+      .setTitle(title)
+      .setDescription(description)
+      .setColor("#24292e");
+  }
 };

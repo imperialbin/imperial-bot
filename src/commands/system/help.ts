@@ -8,7 +8,7 @@ import { sendEmbed } from "../../utils/sendEmbed";
 })
 export class HelpCommand extends Command {
   public run(message: Message) {
-    const embed = sendEmbed("Commands", "All the commands inside IMPERIAL", [
+    const embed = sendEmbed("Commands", "All the commands inside IMPERIAL", false, [
       {
         name: "imp link",
         value: "Link your Imperial account with your Discord account",
