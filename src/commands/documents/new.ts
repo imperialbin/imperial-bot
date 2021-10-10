@@ -10,8 +10,7 @@ import { codeBlock } from "@sapphire/utilities";
   description: "Create a new document",
 })
 export class NewCommand extends Command {
-  public async run(message: Message, args: Args) {
-    console.log(message.content);
+  public async run(message: Message) {
     const user = await getUser(message.author.id);
 
     try {
