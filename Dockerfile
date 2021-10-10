@@ -1,9 +1,9 @@
 FROM node:alpine
 ARG DATABASE_URL
 
+RUN ls
 RUN yarn prisma db push
 
-RUN ls
 RUN yarn
 RUN yarn build
 
