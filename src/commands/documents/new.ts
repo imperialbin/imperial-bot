@@ -11,7 +11,6 @@ import { codeBlock } from "@sapphire/utilities";
 })
 export class NewCommand extends Command {
   public async run(message: Message) {
-    console.log(message.content)
     const user = await getUser(message.author.id);
 
     try {
