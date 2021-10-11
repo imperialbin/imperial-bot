@@ -16,6 +16,7 @@ export const sendEmbed = (
       message.author.tag,
       message.author.displayAvatarURL({ dynamic: true, format: "png" })
     )
+    .setTimestamp()
     .setFooter(
       "IMPERIAL",
       "https://imperialb.in/assets/favicon/favicon-96x96.png"

@@ -1,6 +1,5 @@
 import { Command, CommandOptions } from "@sapphire/framework";
-import { ApplyOptions, RequiresDMContext } from "@sapphire/decorators";
-import { send } from "@sapphire/plugin-editable-commands";
+import { ApplyOptions } from "@sapphire/decorators";
 import type { Message } from "discord.js";
 import { getUser } from "../../lib/getUser";
 import { sendEmbed } from "../../lib/sendEmbed";
@@ -20,15 +19,32 @@ export class LinkCommand extends Command {
       false
     );
 
-    if (message.channel.type !== "DM") {
+    const linkAccount = () => {
       const embed = sendEmbed(
-        "Sent a DM",
-        `For further information on unlinking your account - check your DMs.`,
+        `${user.username} has been linked with ${message.author.tag}`,
+        "Your Discord account has already been linked with your Imperial account.",
         message,
         false
       );
-      message.author.send({ embeds: [messageEmbed] });
-      return message.channel.send({ embeds: [embed] });
+
+      return message.author.send({ embeds: [embed] });
+    }
+
+    if (message.channel.type !== "DM") {
+      const embed = sendEmbed(
+        "Sent a DM",
+        `For further information on linking your account - check your DMs.`,
+        message,
+        false
+      );
+
+      if (user) {
+        linkAccount();
+        message.channel.send({ embeds: [embed]})
+      } else {
+        message.author.send({ embeds: [messageEmbed] });
+        return message.channel.send({ embeds: [embed] });
+      }
     } else {
       if (!user) {
         const embed = sendEmbed(
