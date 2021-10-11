@@ -25,7 +25,9 @@ export class NewCommand extends Command {
           },
         },
       });
-      message.channel.send(`Successfully created document! https://staging-balls.impb.in/${document?.id}`);
+      message.channel.send(
+        `Successfully created document! https://staging-balls.impb.in/${document?.id}`
+      );
     } catch (e) {
       message.channel.send(`Error occured: ${e}`);
     }

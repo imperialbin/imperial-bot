@@ -1,7 +1,4 @@
-import {
-  SapphireClient,
-  SapphireClientOptions,
-} from "@sapphire/framework";
+import { SapphireClient, SapphireClientOptions } from "@sapphire/framework";
 import { PrismaClient } from "@prisma/client";
 import { Intents } from "discord.js";
 

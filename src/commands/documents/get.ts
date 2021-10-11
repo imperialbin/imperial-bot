@@ -31,7 +31,7 @@ export class GetCommand extends Command {
         "Invalid ID",
         "Could not find document with that ID!",
         message,
-        true,
+        true
       );
       return message.channel.send({ embeds: [embed] });
     }
