@@ -1,4 +1,5 @@
-import { Command, CommandOptions } from "@sapphire/framework";
+import { CommandOptions } from "@sapphire/framework";
+import { ImperialCommand } from "../../structures/Command";
 import { ApplyOptions } from "@sapphire/decorators";
 import type { Message } from "discord.js";
 import { prisma } from "../../prisma";
@@ -8,7 +9,7 @@ import { sendEmbed } from "../../lib/sendEmbed";
 @ApplyOptions<CommandOptions>({
   description: "Delete a document",
 })
-export class DeleteCommand extends Command {
+export class DeleteCommand extends ImperialCommand {
   public async run(message: Message) {
     const user = await getUser(message.author.id);
     const document = await prisma.document.findUnique({

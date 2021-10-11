@@ -1,4 +1,5 @@
-import { Command, CommandOptions } from "@sapphire/framework";
+import { CommandOptions } from "@sapphire/framework";
+import { ImperialCommand } from "../../structures/Command";
 import { ApplyOptions } from "@sapphire/decorators";
 import type { Message } from "discord.js";
 import { prisma } from "../../prisma";
@@ -8,7 +9,7 @@ import { API_URL } from "../../lib/constants";
 @ApplyOptions<CommandOptions>({
   description: "Unlink your Imperial account with your Discord account",
 })
-export class UnlinkCommand extends Command {
+export class UnlinkCommand extends ImperialCommand {
   public async run(message: Message) {
     const user = await prisma.user.findUnique({
       where: {

@@ -1,4 +1,5 @@
-import { Command, CommandOptions } from "@sapphire/framework";
+import { CommandOptions } from "@sapphire/framework";
+import { ImperialCommand } from "../../structures/Command";
 import { ApplyOptions } from "@sapphire/decorators";
 import type { Message } from "discord.js";
 import { sendEmbed } from "../../lib/sendEmbed";
@@ -6,7 +7,7 @@ import { sendEmbed } from "../../lib/sendEmbed";
 @ApplyOptions<CommandOptions>({
   description: "Get statistics about the bot",
 })
-export class StatsCommand extends Command {
+export class StatsCommand extends ImperialCommand {
   public async run(message: Message) {
     const embed = sendEmbed(
       "Bot Statistics",

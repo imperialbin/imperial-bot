@@ -1,4 +1,5 @@
-import { Command, CommandOptions } from "@sapphire/framework";
+import { CommandOptions } from "@sapphire/framework";
+import { ImperialCommand } from "../../structures/Command";
 import { ApplyOptions } from "@sapphire/decorators";
 import type { Message } from "discord.js";
 import { getUser } from "../../lib/getUser";
@@ -8,7 +9,7 @@ import { API_URL } from "../../lib/constants";
 @ApplyOptions<CommandOptions>({
   description: "Link your Imperial account with your Discord account",
 })
-export class LinkCommand extends Command {
+export class LinkCommand extends ImperialCommand {
   public async run(message: Message) {
     const user = await getUser(message.author.id);
 

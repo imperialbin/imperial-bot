@@ -1,4 +1,5 @@
-import { Command, Args, CommandOptions } from "@sapphire/framework";
+import { Args, CommandOptions } from "@sapphire/framework";
+import { ImperialCommand } from "../../structures/Command";
 import { ApplyOptions } from "@sapphire/decorators";
 import type { Message } from "discord.js";
 import { prisma } from "../../prisma";
@@ -9,7 +10,7 @@ import { error } from "../../lib/handler/error";
 @ApplyOptions<CommandOptions>({
   description: "Recieve a document's content",
 })
-export class GetCommand extends Command {
+export class GetCommand extends ImperialCommand {
   public async run(message: Message, args: Args) {
     const id = await args.pick("string").catch(() => null);
 

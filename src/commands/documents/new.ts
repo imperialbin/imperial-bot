@@ -1,4 +1,5 @@
-import { Args, Command, CommandOptions } from "@sapphire/framework";
+import { Args, CommandOptions } from "@sapphire/framework";
+import { ImperialCommand } from "../../structures/Command";
 import { ApplyOptions } from "@sapphire/decorators";
 import type { Message } from "discord.js";
 import { prisma } from "../../prisma";
@@ -11,7 +12,7 @@ import { BASE_URL } from "../../lib/constants";
 @ApplyOptions<CommandOptions>({
   description: "Create a new document",
 })
-export class NewCommand extends Command {
+export class NewCommand extends ImperialCommand {
   public async run(message: Message, args: Args) {
     const user = await getUser(message.author.id);
     const code = parseCodeBlock(await args.rest("string"));
