@@ -1,7 +1,7 @@
 import { Command, CommandOptions } from "@sapphire/framework";
 import { ApplyOptions } from "@sapphire/decorators";
 import type { Message } from "discord.js";
-import { sendEmbed } from "../../utils/sendEmbed";
+import { sendEmbed } from "../../lib/sendEmbed";
 
 @ApplyOptions<CommandOptions>({
   description: "A list of all the commands for the bot",

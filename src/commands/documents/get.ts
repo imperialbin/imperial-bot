@@ -3,7 +3,7 @@ import { ApplyOptions } from "@sapphire/decorators";
 import type { Message } from "discord.js";
 import { prisma } from "../../prisma";
 import { codeBlock } from "@sapphire/utilities";
-import { sendEmbed } from "../../utils/sendEmbed";
+import { sendEmbed } from "../../lib/sendEmbed";
 
 @ApplyOptions<CommandOptions>({
   description: "Recieve a document's content",

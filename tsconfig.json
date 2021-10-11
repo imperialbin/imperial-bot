@@ -25,7 +25,7 @@
             "@structures/*": ["src/structures/*"],
             "@events/*": ["src/events/*"],
             "@commands/*": ["src/slash-commands/*"],
-            "@utils/*": ["src/utils/*"]
+            "@utils/*": ["src/lib/*"]
         }
     },
     "exclude": ["node_modules/**/*", "test/**/*"]
