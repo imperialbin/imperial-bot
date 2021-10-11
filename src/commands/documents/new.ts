@@ -14,37 +14,48 @@ import { BASE_URL } from "../../lib/constants";
 export class NewCommand extends Command {
   public async run(message: Message, args: Args) {
     const user = await getUser(message.author.id);
-    const lang = await args.pick("string");
-    const code = await args.rest("string");
-    const codeBlock = parseCodeBlock(code);
-
-    console.log(user);
-    console.log(lang);
-    console.log(codeBlock.code);
+    const code = parseCodeBlock(await args.rest("string"));
 
     const document = await prisma.document.create({
       data: {
         id: generateID(4),
-        content: code,
+        content: code.code,
         creator: user?.username,
         expirationDate: new Date(),
         settings: {
           create: {
-            language: lang ? lang : "plaintext",
+            language: code.lang ? code.lang : "plaintext",
           },
         },
       },
     });
 
-    console.log(document);
-
     if (document) {
+      const documentSettings = await prisma.documentSettings.findUnique({
+        where: {
+          id: document?.documentSettingsId,
+        },
+      });
+
       const embed = sendEmbed(
         "Successfully created Document",
         `${BASE_URL}/${document?.id}`,
         message,
-        false
+        false,
+        [
+          {
+            name: "ID",
+            value: `${document?.id}`,
+            inline: true,
+          },
+          {
+            name: "Language",
+            value: `${documentSettings?.language}`,
+            inline: true,
+          },
+        ]
       );
+
       return message.channel.send({ embeds: [embed] });
     } else {
       const embed = sendEmbed(
