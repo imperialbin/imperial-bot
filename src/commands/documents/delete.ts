@@ -2,7 +2,6 @@ import { Command, CommandOptions } from "@sapphire/framework";
 import { ApplyOptions } from "@sapphire/decorators";
 import type { Message } from "discord.js";
 import { prisma } from "../../prisma";
-import { MessageEmbed } from "discord.js";
 import { getUser } from "../../utils/getUser";
 
 @ApplyOptions<CommandOptions>({
@@ -17,24 +16,21 @@ export class DeleteCommand extends Command {
       },
     });
 
-    if (!document) {
-      message.channel.send("Document does not exist with that ID");
-    }
+    if (!document)
+      return message.channel.send("Document does not exist with that ID");
 
-    if (document) {
-      if (document?.creator == user?.username) {
-        await prisma.document.delete({
-          where: {
-            id: message.content.substring(11),
-          },
-        });
+    if (document?.creator == user?.username) {
+      await prisma.document.delete({
+        where: {
+          id: message.content.substring(11),
+        },
+      });
 
-        message.channel.send(`Successfully deleted ${document?.id}`);
-      } else {
-        message.channel.send(
-          "You do not have permissions to delete that document!"
-        );
-      }
+      message.channel.send(`Successfully deleted ${document?.id}`);
+    } else {
+      message.channel.send(
+        "You do not have permissions to delete that document!"
+      );
     }
   }
 }
