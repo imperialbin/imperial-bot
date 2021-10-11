@@ -1,5 +1,5 @@
 {
-  "main": "dist/index.js",
+  "main": "src/index.ts",
   "scripts": {
     "build": "tsc",
     "buildStart": "yarn prisma generate && tsc && yarn node dist/index.js",

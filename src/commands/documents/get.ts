@@ -30,6 +30,7 @@ export class GetCommand extends Command {
       const embed = sendEmbed(
         "Invalid ID",
         "Could not find document with that ID!",
+        message,
         true,
       );
       return message.channel.send({ embeds: [embed] });

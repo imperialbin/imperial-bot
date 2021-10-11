@@ -21,7 +21,7 @@ export class Client extends SapphireClient {
   public constructor(options?: SapphireClientOptions) {
     super({
       ...options,
-      defaultPrefix: "imp",
+      defaultPrefix: process.env.DEV_MODE ? "imp dev" : "imp",
       caseInsensitiveCommands: true,
       caseInsensitivePrefixes: true,
       intents: [
