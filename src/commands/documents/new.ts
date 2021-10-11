@@ -17,20 +17,21 @@ export class NewCommand extends Command {
     const lang = (await args.pickResult('string')).value;
     const code = parseCodeBlock(await args.rest('string')).code;
 
-    try {
-      const document = await prisma.document.create({
-        data: {
-          id: generateID(4),
-          content: code,
-          creator: user?.username,
-          expirationDate: new Date(),
-          settings: {
-            create: {
-              language: lang ? lang : "plaintext"
-            },
+    const document = await prisma.document.create({
+      data: {
+        id: generateID(4),
+        content: code,
+        creator: user?.username,
+        expirationDate: new Date(),
+        settings: {
+          create: {
+            language: lang ? lang : "plaintext"
           },
         },
-      });
+      },
+    });
+   
+    if (document) {
       const embed = sendEmbed(
         "Successfully created Document",
         `${BASE_URL}/${document?.id}`,
@@ -38,8 +39,15 @@ export class NewCommand extends Command {
         false
       );
       return message.channel.send({ embeds: [embed] });
-    } catch (e) {
-      message.channel.send(`Error occured: ${e}`);
+    } else {
+      const embed = sendEmbed(
+        "Failed to create Document",
+        "Uh oh. An error occured, re-check your message.",
+        message,
+        true
+      );
+
+      return message.channel.send({ embeds: [embed] });
     }
   }
 }
