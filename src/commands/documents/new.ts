@@ -14,8 +14,13 @@ import { BASE_URL } from "../../lib/constants";
 export class NewCommand extends Command {
   public async run(message: Message, args: Args) {
     const user = await getUser(message.author.id);
-    const lang = (await args.pickResult('string')).value;
-    const code = parseCodeBlock(await args.rest('string')).code;
+    const lang = await args.pick("string");
+    const code = await args.rest("string");
+    const codeBlock = parseCodeBlock(code);
+
+    console.log(user);
+    console.log(lang);
+    console.log(codeBlock.code);
 
     const document = await prisma.document.create({
       data: {
@@ -25,12 +30,14 @@ export class NewCommand extends Command {
         expirationDate: new Date(),
         settings: {
           create: {
-            language: lang ? lang : "plaintext"
+            language: lang ? lang : "plaintext",
           },
         },
       },
     });
-   
+
+    console.log(document);
+
     if (document) {
       const embed = sendEmbed(
         "Successfully created Document",

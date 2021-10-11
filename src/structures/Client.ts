@@ -19,8 +19,6 @@ export class Client extends SapphireClient {
     super({
       ...options,
       defaultPrefix: process.env.DEV_MODE ? "imp dev" : "imp",
-      caseInsensitiveCommands: true,
-      caseInsensitivePrefixes: true,
       intents: [
         Intents.FLAGS.GUILDS,
         Intents.FLAGS.GUILD_MEMBERS,
