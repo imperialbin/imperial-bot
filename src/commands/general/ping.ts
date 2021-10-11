@@ -11,19 +11,9 @@ export class PingCommand extends Command {
   public async run(message: Message) {
     const embed = sendEmbed(
       "Pong!  🏓 ",
-      "Below are the latencies recieved",
+      ms(this.container.client.ws.ping),
       message,
-      false,
-      [
-        {
-          name: "Bot Latency",
-          value: ms(this.container.client.ws.ping),
-        },
-        {
-          name: "API Latency",
-          value: String(message.createdTimestamp - message.createdTimestamp),
-        },
-      ]
+      false
     );
 
     return message.channel.send({ embeds: [embed] });
