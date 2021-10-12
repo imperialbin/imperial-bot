@@ -14,6 +14,7 @@
     "@sapphire/plugin-editable-commands": "^0.1.0-next.23809.0",
     "@sapphire/plugin-logger": "^1.0.13",
     "@skyra/editable-commands": "^2.1.0",
+    "colorette": "^2.0.16",
     "discord.js": "13.1.0",
     "dotenv": "^10.0.0",
     "pretty-ms": "^7.0.1",
