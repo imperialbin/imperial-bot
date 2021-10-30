@@ -1,43 +1,47 @@
-import { CommandOptions } from "@sapphire/framework";
-import { ImperialCommand } from "../../structures/Command";
-import { ApplyOptions } from "@sapphire/decorators";
-import type { Message } from "discord.js";
+import { Command, config } from "@mammot/core";
+import type { CommandInteraction } from "discord.js";
 import { sendEmbed } from "../../lib/sendEmbed";
 
-@ApplyOptions<CommandOptions>({
-  description: "A list of all the commands for the bot",
-})
-export class HelpCommand extends ImperialCommand {
-  public run(message: Message) {
+@config("help", { description: "A list of all the commands for the bot" })
+export class HelpCommand extends Command {
+  public run(interaction: CommandInteraction) {
     const embed = sendEmbed(
       "Commands",
       "All the commands inside IMPERIAL",
-      message,
+      interaction,
       false,
       [
         {
-          name: "imp link",
+          name: "/link",
           value: "Link your Imperial account with your Discord account",
         },
         {
-          name: "imp unlink",
+          name: "/unlink",
           value: "Unlink your Imperial account with your Discord account",
         },
         {
-          name: "imp new {text}",
+          name: "/new {content}",
           value: "Create a new document",
         },
         {
-          name: "imp get {documentId}",
+          name: "/get {id}",
           value: "Get a document's content",
         },
         {
-          name: "imp delete {documentId}",
+          name: "/delete {id}",
           value: "Delete a document",
+        },
+        {
+          name: "/help",
+          value: "List of all commands for the bot",
+        },
+        {
+          name: "/ping",
+          value: "Get bot latency",
         },
       ]
     );
 
-    return message.reply({ embeds: [embed] });
+    return interaction.reply({ embeds: [embed] });
   }
 }

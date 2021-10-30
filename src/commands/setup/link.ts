@@ -1,71 +1,69 @@
-import { CommandOptions } from "@sapphire/framework";
-import { ImperialCommand } from "../../structures/Command";
-import { ApplyOptions } from "@sapphire/decorators";
-import type { Message } from "discord.js";
+import { Command, config } from "@mammot/core";
+import { CommandInteraction, GuildMember } from "discord.js";
 import { getUser } from "../../lib/getUser";
 import { sendEmbed } from "../../lib/sendEmbed";
 import { API_URL } from "../../lib/constants";
 
-@ApplyOptions<CommandOptions>({
+@config("link", {
   description: "Link your Imperial account with your Discord account",
 })
-export class LinkCommand extends ImperialCommand {
-  public async run(message: Message) {
-    const user = await getUser(message.author.id);
+export class LinkAccount extends Command {
+  public async run(interaction: CommandInteraction) {
+    const user = await getUser((interaction.member as GuildMember).id);
 
     const messageEmbed = sendEmbed(
       "Let's continue where we left off",
       "Type `imp link` below to start linking your Imperial account with your Discord acccount",
-      message,
+      interaction,
       false
     );
 
     const linkAccount = () => {
       const embed = sendEmbed(
-        `${user.username} has been linked with ${message.author.tag}`,
+        `${user.username} has been linked with ${interaction.user.tag}`,
         "Your Discord account has already been linked with your Imperial account.",
-        message,
+        interaction,
         false
       );
 
-      return message.author.send({ embeds: [embed] });
-    }
+      return interaction.user.send({ embeds: [embed] });
+    };
 
-    if (message.channel.type !== "DM") {
+    if (interaction.channel?.type !== undefined) {
       const embed = sendEmbed(
         "Sent a DM",
         `For further information on linking your account - check your DMs.`,
-        message,
+        interaction,
         false
       );
 
       if (user) {
         linkAccount();
-        message.channel.send({ embeds: [embed]})
+        interaction.reply({ embeds: [embed] });
       } else {
-        message.author.send({ embeds: [messageEmbed] });
-        return message.channel.send({ embeds: [embed] });
+        interaction.user.send({ embeds: [messageEmbed] });
+        return interaction.reply({ embeds: [embed] });
       }
     } else {
       if (!user) {
         const embed = sendEmbed(
           "You haven't connected yet!",
           `To connect your Imperial account with your Discord, follow the link below: ${API_URL}/v1/oauth/discord`,
-          message,
+          interaction,
           false
         );
-        return message.channel.send({ embeds: [embed] });
+        return interaction.reply({ embeds: [embed] });
       }
 
       if (user) {
         const embed = sendEmbed(
-          `${user.username} has been linked with ${message.author.tag}`,
+          `${user.username} has been linked with ${interaction.user.tag}`,
           "Your Discord account has already been linked with your Imperial account.",
-          message,
+          interaction,
           false
         );
 
-        return message.channel.send({ embeds: [embed] });
+        return interaction.reply({ embeds: [embed] });
       }
     }
   }

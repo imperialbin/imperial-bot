@@ -1,7 +1,5 @@
-import { Args, CommandOptions } from "@sapphire/framework";
-import { ImperialCommand } from "../../structures/Command";
-import { ApplyOptions } from "@sapphire/decorators";
-import type { Message } from "discord.js";
+import { config, Command, option } from "@mammot/core";
+import { CommandInteraction, GuildMember } from "discord.js";
 import { prisma } from "../../prisma";
 import { getUser } from "../../lib/getUser";
 import { generateID } from "../../lib/generate";
@@ -9,13 +7,20 @@ import { parseCodeBlock } from "../../lib/parseCodeBlock";
 import { sendEmbed } from "../../lib/sendEmbed";
 import { BASE_URL } from "../../lib/constants";
 
-@ApplyOptions<CommandOptions>({
-  description: "Create a new document",
-})
-export class NewCommand extends ImperialCommand {
-  public async run(message: Message, args: Args) {
-    const user = await getUser(message.author.id);
-    const code = parseCodeBlock(await args.rest("string"));
+@config("new", { description: "Create a new document" })
+export class NewDocument extends Command {
+  public async run(
+    interaction: CommandInteraction,
+
+    @option("content", {
+      description: "ID of document to read",
+      type: "STRING",
+      required: true,
+    })
+    content: string
+  ) {
+    const user = await getUser((interaction.member as GuildMember).id);
+    const code = parseCodeBlock(content);
 
     const document = await prisma.document.create({
       data: {
@@ -41,7 +46,7 @@ export class NewCommand extends ImperialCommand {
       const embed = sendEmbed(
         "Successfully created Document",
         `${BASE_URL}/${document?.id}`,
-        message,
+        interaction,
         false,
         [
           {
@@ -57,16 +62,16 @@ export class NewCommand extends ImperialCommand {
         ]
       );
 
-      return message.channel.send({ embeds: [embed] });
+      return interaction.reply({ ephemeral: true, embeds: [embed] });
     } else {
       const embed = sendEmbed(
         "Failed to create Document",
         "Uh oh. An error occured, re-check your message.",
-        message,
+        interaction,
         true
       );
 
-      return message.channel.send({ embeds: [embed] });
+      return interaction.reply({ embeds: [embed] });
     }
   }
 }

@@ -1,10 +1,10 @@
 import { MessageEmbed, EmbedFieldData } from "discord.js";
-import type { Message } from "discord.js";
+import { CommandInteraction } from "discord.js";
 
 export const sendEmbed = (
   title: string,
   description: string,
-  message: Message,
+  interaction: CommandInteraction,
   error: boolean,
   fields?: EmbedFieldData[]
 ) => {
@@ -13,8 +13,8 @@ export const sendEmbed = (
     .setDescription(description)
     .setColor("#24292e")
     .setAuthor(
-      message.author.tag,
-      message.author.displayAvatarURL({ dynamic: true, format: "png" })
+      interaction.user.tag,
+      interaction.user.displayAvatarURL({ dynamic: true, format: "png" })
     )
     .setTimestamp()
     .setFooter(

@@ -1,20 +1,25 @@
-import { CommandOptions } from "@sapphire/framework";
-import { ImperialCommand } from "../../structures/Command";
-import { ApplyOptions } from "@sapphire/decorators";
-import type { Message } from "discord.js";
+import { config, Command, option } from "@mammot/core";
+import { CommandInteraction, GuildMember } from "discord.js";
 import { prisma } from "../../prisma";
 import { getUser } from "../../lib/getUser";
 import { sendEmbed } from "../../lib/sendEmbed";
 
-@ApplyOptions<CommandOptions>({
-  description: "Delete a document",
-})
-export class DeleteCommand extends ImperialCommand {
-  public async run(message: Message) {
-    const user = await getUser(message.author.id);
+@config("delete", { description: "Delete a document" })
+export class DeleteDocument extends Command {
+  public async run(
+    interaction: CommandInteraction,
+
+    @option("id", {
+      description: "ID of document to delete",
+      type: "STRING",
+      required: true,
+    })
+    id: string
+  ) {
+    const user = await getUser((interaction.member as GuildMember).id);
     const document = await prisma.document.findUnique({
       where: {
-        id: message.content.substring(15),
+        id,
       },
     });
 
@@ -22,34 +27,34 @@ export class DeleteCommand extends ImperialCommand {
       const embed = sendEmbed(
         "Invalid Document",
         "Document does not exist with that ID",
-        message,
+        interaction,
         true
       );
-      return message.channel.send({ embeds: [embed] });
+      return interaction.reply({ ephemeral: true, embeds: [embed] });
     }
 
     if (document?.creator == user?.username) {
       await prisma.document.delete({
         where: {
-          id: message.content.substring(15),
+          id,
         },
       });
 
       const embed = sendEmbed(
         "Successfully deleted Document",
         `Farewell ${document?.id}!`,
-        message,
+        interaction,
         false
       );
-      return message.channel.send({ embeds: [embed] });
+      return interaction.reply({ ephemeral: true, embeds: [embed] });
     } else {
       const embed = sendEmbed(
         "Failed to delete Document",
         "You do not have permissions to delete that document!",
-        message,
+        interaction,
         true
       );
-      return message.channel.send({ embeds: [embed] });
+      return interaction.reply({ ephemeral: true, embeds: [embed] });
     }
   }
 }

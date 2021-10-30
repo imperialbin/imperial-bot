@@ -1,41 +1,35 @@
-import "@sapphire/plugin-logger/register";
-import "@skyra/editable-commands";
-import "reflect-metadata";
-import "dotenv/config";
-import { Client } from "./structures/Client";
-import { BASE_URL } from "./lib/constants";
-import { prisma } from "./prisma";
-import { sendEmbed } from "./lib/sendEmbed";
-import { codeBlock } from "@sapphire/utilities";
+import { Mammot } from "@mammot/core";
+import { Intents } from "discord.js";
+import { green } from "colorette";
+import {
+  LinkAccount,
+  UnlinkAccount,
+  HelpCommand,
+  PingCommand,
+  NewDocument,
+  GetDocument,
+  DeleteDocument,
+} from "./commands";
 
-const client = new Client();
+const mammot = Mammot.client({
+  intents: [
+    Intents.FLAGS.GUILDS,
+    Intents.FLAGS.GUILD_MESSAGES,
+    Intents.FLAGS.GUILD_MEMBERS,
+  ],
 
-client.on("messageCreate", async (message) => {
-  if (message.content.includes(`${BASE_URL}/`)) {
-    const path = message.content.replace(/^https?:\/\//, "").split("/");
-    const document = await prisma.document.findUnique({
-      where: {
-        id: path[1],
-      },
-    });
+  developmentGuild: process.env.DEVELOPMENT_GUILD_ID!,
 
-    if (document) {
-      const documentSettings = await prisma.documentSettings.findUnique({
-        where: {
-          id: document?.documentSettingsId,
-        },
-      });
-      const embed = sendEmbed(
-        "Imperial URL detected!",
-        codeBlock(String(documentSettings?.language), document?.content),
-        message,
-        false
-      );
+  async onError(interaction, error) {
+    console.warn(error);
+    return Promise.resolve("Something went wrong!");
+  },
 
-      message.channel.send({ embeds: [embed] });
-    }
-  }
+  onReady(user) {
+    console.log(green("ready -"), `Logged into client as ${user.username}`);
+  },
 });
 
-client.login();
-client.logger.info(`Logging in...`);
+mammot
+  .addCommands([LinkAccount, UnlinkAccount, HelpCommand, PingCommand, NewDocument, GetDocument, DeleteDocument])
+  .login(process.env.DISCORD_BOT_TOKEN);

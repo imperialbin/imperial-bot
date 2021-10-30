@@ -1,19 +1,17 @@
-import { CommandOptions } from "@sapphire/framework";
-import { ImperialCommand } from "../../structures/Command";
-import { ApplyOptions } from "@sapphire/decorators";
-import type { Message } from "discord.js";
+import { Command, config } from "@mammot/core";
+import { CommandInteraction, GuildMember } from "discord.js";
 import { prisma } from "../../prisma";
 import { sendEmbed } from "../../lib/sendEmbed";
 import { API_URL } from "../../lib/constants";
 
-@ApplyOptions<CommandOptions>({
+@config("unlink", {
   description: "Unlink your Imperial account with your Discord account",
 })
-export class UnlinkCommand extends ImperialCommand {
-  public async run(message: Message) {
+export class UnlinkAccount extends Command {
+  public async run(interaction: CommandInteraction) {
     const user = await prisma.user.findUnique({
       where: {
-        discordId: message.author.id,
+        discordId: (interaction.member as GuildMember).id,
       },
     });
 
@@ -21,7 +19,7 @@ export class UnlinkCommand extends ImperialCommand {
       if (user) {
         await prisma.user.update({
           where: {
-            discordId: message.author.id,
+            discordId: (interaction.member as GuildMember).id,
           },
           data: {
             discordId: null,
@@ -29,40 +27,40 @@ export class UnlinkCommand extends ImperialCommand {
         });
 
         const embed = sendEmbed(
-          `Unlinked ${message.author.tag}`,
+          `Unlinked ${interaction.user.tag}`,
           "Your discord account has been unlinked with your Imperial account",
-          message,
+          interaction,
           false
         );
 
-        return message.author.send({ embeds: [embed] });
+        return interaction.user.send({ embeds: [embed] });
       }
     };
 
     const notConnectedEmbed = sendEmbed(
       "You haven't connected yet!",
       `To connect your Imperial account with your Discord, follow the link below: ${API_URL}/v1/oauth/discord`,
-      message,
+      interaction,
       false
     );
 
-    if (message.channel.type !== "DM") {
+    if (interaction.channel?.type !== undefined) {
       const embed = sendEmbed(
         "Sent a DM",
         `For further information on unlinking your account - check your DMs.`,
-        message,
+        interaction,
         false
       );
 
       if (user) {
         unlinkAccount();
       } else {
-        message.author.send({ embeds: [notConnectedEmbed] });
+        interaction.user.send({ embeds: [notConnectedEmbed] });
       }
-      return message.channel.send({ embeds: [embed] });
+      return interaction.reply({ embeds: [embed] });
     } else {
       if (!user) {
-        return message.channel.send({ embeds: [notConnectedEmbed] });
+        return interaction.reply({ embeds: [notConnectedEmbed] });
       }
 
       if (user) {
