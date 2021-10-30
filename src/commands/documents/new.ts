@@ -13,7 +13,7 @@ export class NewDocument extends Command {
     interaction: CommandInteraction,
 
     @option("content", {
-      description: "ID of document to read",
+      description: "Text content to upload",
       type: "STRING",
       required: true,
     })
