@@ -7,6 +7,7 @@
     "dev": "ts-node-dev --poll --exit-child --transpile-only ./src/index.ts"
   },
   "dependencies": {
+    "@mammot/core": "^0.0.7",
     "@prisma/client": "^3.2.1",
     "@sapphire/decorators": "^3.0.1",
     "@sapphire/fetch": "^2.0.0",
@@ -15,14 +16,16 @@
     "@sapphire/plugin-logger": "^1.0.13",
     "@skyra/editable-commands": "^2.1.0",
     "colorette": "^2.0.16",
-    "discord.js": "13.1.0",
+    "discord.js": "13.2.0",
     "dotenv": "^10.0.0",
     "pretty-ms": "^7.0.1",
     "prisma": "^3.2.1",
     "reflect-metadata": "^0.1.13",
-    "ts-node-dev": "^1.1.8"
+    "ts-node-dev": "^1.1.8",
+    "url-parse": "^1.5.3"
   },
   "devDependencies": {
+    "@types/url-parse": "^1.4.4",
     "typescript": "^4.4.3"
   }
 }

@@ -1,18 +1,14 @@
-import { CommandOptions } from "@sapphire/framework";
-import { ImperialCommand } from "../../structures/Command";
-import { ApplyOptions } from "@sapphire/decorators";
-import type { Message } from "discord.js";
+import { Command, config } from "@mammot/core";
+import type { CommandInteraction } from "discord.js";
 import { sendEmbed } from "../../lib/sendEmbed";
 
-@ApplyOptions<CommandOptions>({
-  description: "A list of all the commands for the bot",
-})
-export class HelpCommand extends ImperialCommand {
-  public run(message: Message) {
+@config("help", {description: "A list of all the commands for the bot"})
+export class HelpCommand extends Command {
+  public run(interaction: CommandInteraction) {
     const embed = sendEmbed(
       "Commands",
       "All the commands inside IMPERIAL",
-      message,
+      interaction,
       false,
       [
         {
@@ -38,6 +34,6 @@ export class HelpCommand extends ImperialCommand {
       ]
     );
 
-    return message.reply({ embeds: [embed] });
+    return interaction.reply({ embeds: [embed] });
   }
 }

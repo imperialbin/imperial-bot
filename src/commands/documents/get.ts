@@ -1,26 +1,34 @@
-import { Args, CommandOptions } from "@sapphire/framework";
-import { ImperialCommand } from "../../structures/Command";
-import { ApplyOptions } from "@sapphire/decorators";
-import type { Message } from "discord.js";
+import { config, Command, option } from "@mammot/core";
+import { CommandInteraction } from "discord.js";
 import { prisma } from "../../prisma";
-import { codeBlock } from "@sapphire/utilities";
-import { sendEmbed } from "../../lib/sendEmbed";
 import { error } from "../../lib/handler/error";
+import { BASE_URL } from "../../lib/constants";
+import { sendEmbed } from "../../lib/sendEmbed";
+import { codeBlock } from "@discordjs/builders";
+import Url from "url-parse";
 
-@ApplyOptions<CommandOptions>({
-  description: "Recieve a document's content",
-})
-export class GetCommand extends ImperialCommand {
-  public async run(message: Message, args: Args) {
-    const id = await args.pick("string").catch(() => null);
+@config("get", { description: "Read a document" })
+export class GetDocument extends Command {
+  public async run(
+    interaction: CommandInteraction,
 
+    @option("id", {
+      description: "ID of document to read",
+      type: "STRING",
+      required: true,
+    })
+    id: string
+  ) {
     if (!id) {
-      const embed = error(message, "no_id_provided");
-      return message.channel.send({ embeds: [embed] });
+      const embed = error(interaction, "no_id_provided");
+      return interaction.reply({ ephemeral: true, embeds: [embed] });
     } else {
+      console.log(new Url(id).pathname.replace("/", ""));
       const document = await prisma.document.findUnique({
         where: {
-          id,
+          id: id.includes(BASE_URL)
+            ? new Url(id).pathname.replace("/", "")
+            : id,
         },
       });
 
@@ -31,17 +39,17 @@ export class GetCommand extends ImperialCommand {
           },
         });
 
-        message.channel.send(
+        interaction.reply(
           codeBlock(String(documentSettings?.language), document?.content)
         );
       } else {
         const embed = sendEmbed(
           "Invalid ID",
           "Could not find document with that ID!",
-          message,
+          interaction,
           true
         );
-        return message.channel.send({ embeds: [embed] });
+        return interaction.reply({ ephemeral: true, embeds: [embed] });
       }
     }
   }
