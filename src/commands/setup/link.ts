@@ -13,7 +13,7 @@ export class LinkAccount extends Command {
 
     const messageEmbed = sendEmbed(
       "Let's continue where we left off",
-      "Type `imp link` below to start linking your Imperial account with your Discord acccount",
+      "Type `/link` below to start linking your Imperial account with your Discord acccount",
       interaction,
       false
     );
@@ -39,7 +39,7 @@ export class LinkAccount extends Command {
 
       if (user) {
         linkAccount();
-        interaction.reply({ embeds: [embed] });
+        return interaction.reply({ embeds: [embed] });
       } else {
         interaction.user.send({ embeds: [messageEmbed] });
         return interaction.reply({ embeds: [embed] });
