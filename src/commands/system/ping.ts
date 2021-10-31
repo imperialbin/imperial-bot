@@ -13,6 +13,6 @@ export class PingCommand extends Command {
 			false,
 		);
 
-		return interaction.reply({embeds: [embed]});
+		return interaction.reply({ephemeral: true, embeds: [embed]});
 	}
 }

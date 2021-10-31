@@ -82,7 +82,7 @@ export class NewDocument extends Command {
 				true,
 			);
 
-			return interaction.reply({embeds: [embed]});
+			return interaction.reply({ephemeral: true, embeds: [embed]});
 		}
 	}
 }

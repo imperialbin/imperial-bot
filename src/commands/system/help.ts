@@ -36,6 +36,6 @@ export class HelpCommand extends Command {
 			},
 		]);
 
-		return interaction.reply({embeds: [embed]});
+		return interaction.reply({ephemeral: true, embeds: [embed]});
 	}
 }
