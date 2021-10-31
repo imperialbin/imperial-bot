@@ -43,14 +43,16 @@ export class NewDocument extends Command {
         },
       });
 
-      await prisma.user.update({
-        where: {
-          id: user.id,
-        },
-        data: {
-          documentsMade: user.documentsMade + 1,
-        },
-      });
+      if (user) {
+        await prisma.user.update({
+          where: {
+            id: user.id,
+          },
+          data: {
+            documentsMade: user.documentsMade + 1,
+          },
+        });
+      }
 
       const embed = sendEmbed(
         "Successfully created Document",
