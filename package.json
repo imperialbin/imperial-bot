@@ -9,9 +9,11 @@
   "dependencies": {
     "@mammot/core": "^0.0.7",
     "@prisma/client": "^3.2.1",
+    "bcrypt": "^5.0.1",
     "colorette": "^2.0.16",
     "discord.js": "13.2.0",
     "dotenv": "^10.0.0",
+    "prettier": "^2.4.1",
     "pretty-ms": "^7.0.1",
     "prisma": "^3.2.1",
     "reflect-metadata": "^0.1.13",
@@ -19,7 +21,13 @@
     "url-parse": "^1.5.3"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/url-parse": "^1.4.4",
+    "@typescript-eslint/eslint-plugin": "^5.2.0",
+    "@typescript-eslint/parser": "^5.2.0",
+    "eslint": "^8.1.0",
+    "eslint-config-xo": "^0.39.0",
+    "eslint-config-xo-typescript": "^0.47.1",
     "typescript": "^4.4.3"
   }
 }

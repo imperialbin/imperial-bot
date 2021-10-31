@@ -1,70 +1,82 @@
-import { Command, config } from "@mammot/core";
-import { CommandInteraction, GuildMember } from "discord.js";
-import { getUser } from "../../lib/getUser";
-import { sendEmbed } from "../../lib/sendEmbed";
-import { API_URL } from "../../lib/constants";
+import {Command, config, option} from '@mammot/core';
+import {CommandInteraction, GuildMember} from 'discord.js';
+import {getUser} from '../../lib/getUser';
+import {sendEmbed} from '../../lib/sendEmbed';
+import {prisma} from '../../prisma';
+import bcrypt from 'bcrypt';
 
-@config("link", {
-  description: "Link your Imperial account with your Discord account",
+@config('link', {
+	description: 'Link your Imperial account with your Discord account',
 })
 export class LinkAccount extends Command {
-  public async run(interaction: CommandInteraction) {
-    const user = await getUser((interaction.member as GuildMember).id);
+	public async run(
+		interaction: CommandInteraction,
 
-    const messageEmbed = sendEmbed(
-      "Let's continue where we left off",
-      "Type `/link` below to start linking your Imperial account with your Discord acccount",
-      interaction,
-      false
-    );
+		@option('email', {
+			description: 'Email of your Imperial account',
+			type: 'STRING',
+		})
+		email: string,
 
-    const linkAccount = () => {
-      const embed = sendEmbed(
-        `${user.username} has been linked with ${interaction.user.tag}`,
-        "Your Discord account has already been linked with your Imperial account.",
-        interaction,
-        false
-      );
+		@option('password', {
+			description: 'Password of your Imperial account',
+			type: 'STRING',
+		})
+		password: string,
+	) {
+		const user = await getUser((interaction.member as GuildMember).id);
 
-      return interaction.user.send({ embeds: [embed] });
-    };
+		const connectedEmbed = (user: string, text: string) =>
+			sendEmbed(
+				`${user} has been linked with ${interaction.user.tag}`,
+				`Your Discord account has ${text} been linked with your Imperial account.`,
+				interaction,
+				false,
+			);
 
-    if (interaction.channel?.type !== undefined) {
-      const embed = sendEmbed(
-        "Sent a DM",
-        `For further information on linking your account - check your DMs.`,
-        interaction,
-        false
-      );
+		const errorEmbed = sendEmbed(
+			'Failed to link account',
+			'Your Imperial account credentials are incorrect.',
+			interaction,
+			true,
+		);
 
-      if (user) {
-        linkAccount();
-        return interaction.reply({ embeds: [embed] });
-      } else {
-        interaction.user.send({ embeds: [messageEmbed] });
-        return interaction.reply({ embeds: [embed] });
-      }
-    } else {
-      if (!user) {
-        const embed = sendEmbed(
-          "You haven't connected yet!",
-          `To connect your Imperial account with your Discord, follow the link below: ${API_URL}/v1/oauth/discord`,
-          interaction,
-          false
-        );
-        return interaction.reply({ embeds: [embed] });
-      }
+		if (user) {
+			return interaction.reply({
+				ephemeral: true,
+				embeds: [connectedEmbed(user.username, 'already')],
+			});
+		} else {
+			const account = await prisma.user.findUnique({
+				where: {
+					email,
+				},
+			});
 
-      if (user) {
-        const embed = sendEmbed(
-          `${user.username} has been linked with ${interaction.user.tag}`,
-          "Your Discord account has already been linked with your Imperial account.",
-          interaction,
-          false
-        );
+			if (account) {
+				if (bcrypt.compareSync(password, account.password)) {
+					await prisma.user.update({
+						where: {
+							id: account.id,
+						},
+						data: {
+							discordId: (interaction.member as GuildMember).id,
+						},
+					});
 
-        return interaction.reply({ embeds: [embed] });
-      }
-    }
-  }
+					return interaction.reply({
+						ephemeral: true,
+						embeds: [connectedEmbed(account.username, 'successfully')],
+					});
+				} else {
+					return interaction.reply({
+						ephemeral: true,
+						embeds: [errorEmbed],
+					});
+				}
+			} else {
+				return interaction.reply({ephemeral: true, embeds: [errorEmbed]});
+			}
+		}
+	}
 }

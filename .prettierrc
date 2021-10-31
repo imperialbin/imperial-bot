@@ -1,0 +1,9 @@
+{
+	"quoteProps": "consistent",
+	"useTabs": true,
+	"singleQuote": true,
+	"arrowParens": "avoid",
+	"printWidth": 100,
+	"bracketSpacing": false,
+	"trailingComma": "all"
+}
