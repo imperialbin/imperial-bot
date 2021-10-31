@@ -23,7 +23,6 @@ export class GetDocument extends Command {
       const embed = error(interaction, "no_id_provided");
       return interaction.reply({ ephemeral: true, embeds: [embed] });
     } else {
-      console.log(new Url(id).pathname.replace("/", ""));
       const document = await prisma.document.findUnique({
         where: {
           id: id.includes(BASE_URL)

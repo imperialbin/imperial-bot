@@ -48,7 +48,7 @@ export class NewDocument extends Command {
           id: user.id,
         },
         data: {
-          documentsMade: user.documentsMade++,
+          documentsMade: user.documentsMade + 1,
         },
       });
 
