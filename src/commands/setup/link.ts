@@ -1,9 +1,10 @@
-import {Command, config, option} from '@mammot/core';
-import {CommandInteraction, GuildMember} from 'discord.js';
-import {getUser} from '../../lib/getUser';
-import {sendEmbed} from '../../lib/sendEmbed';
-import {prisma} from '../../prisma';
+import { Command, config, option } from '@mammot/core';
 import bcrypt from 'bcrypt';
+import { CommandInteraction, GuildMember } from 'discord.js';
+import { BASE_URL } from '../../lib/constants';
+import { getUser } from '../../lib/getUser';
+import { sendEmbed } from '../../lib/sendEmbed';
+import { prisma } from '../../prisma';
 
 @config('link', {
 	description: 'Link your Imperial account with your Discord account',
@@ -36,10 +37,20 @@ export class LinkAccount extends Command {
 
 		const errorEmbed = sendEmbed(
 			'Failed to link account',
-			'Your Imperial account credentials are incorrect.',
+			`Your Imperial account credentials are incorrect. You can also link your account using: ${BASE_URL}/link/discord`,
 			interaction,
 			true,
 		);
+
+		if (!email || !password) {
+			const embed = sendEmbed(
+				'Link your Discord account',
+				`To link your account, follow this link: ${BASE_URL}/link/discord`,
+				interaction,
+				false,
+			);
+			return interaction.reply({ephemeral: true, embeds: [embed]});
+		}
 
 		if (user) {
 			return interaction.reply({
