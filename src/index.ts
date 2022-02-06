@@ -10,7 +10,7 @@ import {
 	GetDocument,
 	DeleteDocument,
 } from './commands';
-
+// need to make a commit so railway can revive its self smh
 const mammot = Mammot.client({
 	intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS],
 
